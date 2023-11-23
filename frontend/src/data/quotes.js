@@ -1,3 +1,4 @@
+// Citas motivacionales
 export const quotes = [
   "Cada acción que tomas es un voto por la persona en la que deseas convertirte.",
   "Los hábitos son el interés compuesto de la auto-superación.",

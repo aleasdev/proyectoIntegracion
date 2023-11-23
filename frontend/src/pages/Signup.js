@@ -3,6 +3,7 @@ import FormInput from "../components/FormInput";
 import useSignup from "../hooks/useSignup";
 
 const Signup = () => {
+  // Estados para almacenar el nombre, correo electrónico, contraseña y mensajes de error
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -11,54 +12,66 @@ const Signup = () => {
     email: "",
     password: "",
   });
+  // Utilizar el hook de registro personalizado
   const { signup, loading, error } = useSignup();
 
+  // Función para manejar el envío del formulario
   const handleSubmit = async (e) => {
     console.log({ password });
     e.preventDefault();
+    // Validar campos requeridos
     if (name.trim() === "" || email.trim() === "" || password.trim() === "") {
       name.trim() === "" &&
         setErrorMessage((prev) => {
-          return { ...prev, name: "Required" };
+          return { ...prev, name: "Campo requerido" };
         });
       email.trim() === "" &&
         setErrorMessage((prev) => {
-          return { ...prev, email: "Required" };
+          return { ...prev, email: "Campo requerido" };
         });
       password.trim() === "" &&
         setErrorMessage((prev) => {
-          return { ...prev, password: "Required" };
+          return { ...prev, password: "Campo requerido" };
         });
       return;
     }
+    // Expresión regular para validar el formato de correo electrónico
     const emailRegEx =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    // Validar el formato del correo electrónico
     if (!emailRegEx.test(email)) {
       setErrorMessage((prev) => {
-        return { ...prev, email: "Invalid email address" };
+        return { ...prev, email: "Dirección de correo electrónico inválida" };
       });
       return;
     }
+    // Validar longitud mínima de la contraseña
     if (password.length < 6) {
       setErrorMessage((prev) => {
         return {
           ...prev,
-          password: "Minimum 6 characters required",
+          password: "Se requieren al menos 6 caracteres",
         };
       });
       return;
     }
+    // Imprimir información de nombre, correo electrónico y contraseña en la consola
     console.log({ name, email, password });
+    // Intentar registrarse con el nombre, correo electrónico y contraseña proporcionados
     await signup({ name, email, password });
+    // Imprimir información de carga y errores en la consola
     console.log({ loading, error: error.response.data.error });
+    // Manejar errores
     if (error) {
       return;
     }
+    // Limpiar los campos después de un registro exitoso
     setName("");
     setEmail("");
     setPassword("");
   };
 
+  // Efecto para limpiar los mensajes de error al cambiar el nombre, correo electrónico o contraseña
   useEffect(() => {
     if (name.trim() !== "") {
       setErrorMessage((prev) => {
@@ -77,8 +90,9 @@ const Signup = () => {
     }
   }, [name, email, password]);
 
+  // Efecto para manejar mensajes de error específicos al cambiar el estado de error
   useEffect(() => {
-    if (error && error.response.data.error === "Email already in use") {
+    if (error && error.response.data.error === "Correo electrónico ya en uso") {
       setErrorMessage((prev) => {
         return { ...prev, email: error.response.data.error };
       });
@@ -90,6 +104,7 @@ const Signup = () => {
     }
   }, [error]);
 
+  // Renderizar el formulario de registro
   return (
     <form
       onSubmit={handleSubmit}
@@ -133,7 +148,7 @@ const Signup = () => {
 
       <input
         type="submit"
-        value="Signup"
+        value="Registrarse"
         disabled={loading}
         className={`mt-4 bg-white/60 hover:bg-gray-100 hover:border-gray-400 text-sm px-3 py-2 border-2 border-gray-400/50 rounded-full cursor-pointer focus:border-gray-500/80 transition-colors ease-in-out duration-300 font-semibold ${
           loading && "text-gray-300 hover:border-gray-300"

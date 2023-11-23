@@ -8,9 +8,12 @@ import { useHabitsContext } from "../hooks/useHabitsContext";
 import { days } from "../utils/date";
 
 const FullList = () => {
+  // Obtener el estado y las funciones del contexto de hábitos
   const { allHabits, sortedHabits, sortOption, dispatch } = useHabitsContext();
+  // Utilizar el hook personalizado useGet para realizar solicitudes GET
   const { getRequest, loading, error } = useGet();
 
+  // Función para obtener todos los hábitos del usuario
   const fetchAllHabits = async () => {
     try {
       const res = await getRequest("/habits", {
@@ -20,9 +23,9 @@ const FullList = () => {
       console.log({ data });
 
       if (data) {
+        // Actualizar el estado de todos los hábitos
         dispatch({
           type: "SET_ALL_HABITS",
-          // payload: data,
           payload: data,
         });
       }
@@ -31,7 +34,9 @@ const FullList = () => {
     }
   };
 
+  // Función para ordenar los hábitos según la opción seleccionada
   const sortHabits = (sortOption) => {
+    // Ordenar por días de la semana
     if (sortOption === "days") {
       let categorizedHabits = [];
       if (allHabits.length > 0) {
@@ -41,15 +46,18 @@ const FullList = () => {
             habits: allHabits.filter((habit) => habit.reps.includes(day)),
           })
         );
-        dispatch({ type: "SET_SORTED_HABITS", payload: categorizedHabits }); // remember "let" is block scoped
+        // Actualizar el estado de hábitos ordenados
+        dispatch({ type: "SET_SORTED_HABITS", payload: categorizedHabits });
       }
     }
 
+    // Ordenar de más recientes a más antiguos
     if (sortOption === "newest-first") {
       dispatch({ type: "SET_SORTED_HABITS", payload: allHabits });
       console.log({ allHabits, sortedHabits });
     }
 
+    // Ordenar de más antiguos a más recientes
     if (sortOption === "oldest-first") {
       let tempArray = [...allHabits];
       dispatch({ type: "SET_SORTED_HABITS", payload: tempArray.reverse() });
@@ -59,16 +67,22 @@ const FullList = () => {
     console.log({ sortedHabits });
   };
 
+  // Manejar cambios en la opción de orden
   const handleOptionChange = (e) => {
+    // Actualizar la opción de orden en el estado
     dispatch({ type: "SET_SORT_OPTION", payload: e.target.value });
+    // Almacenar la opción de orden en el almacenamiento local
     localStorage.setItem("sort-option", e.target.value);
+    // Ordenar los hábitos según la nueva opción
     sortHabits(e.target.value);
   };
 
+  // Efecto para obtener todos los hábitos al cargar la página
   useEffect(() => {
     fetchAllHabits();
   }, []);
 
+  // Efecto para ordenar los hábitos cuando cambia la lista completa de hábitos
   useEffect(() => {
     sortHabits(sortOption);
   }, [allHabits]);
@@ -79,13 +93,13 @@ const FullList = () => {
         <h2 className="text-center text-xl font-semibold">Todos los hábitos</h2>
         <div className="flex items-center my-8">
           <label>
-            Sort by
+            Ordenar por
             <select
               value={sortOption}
               onChange={handleOptionChange}
               className="mx-1 pl-px pr-1 border focus:outline-0"
             >
-              <option value="days">Dias</option>
+              <option value="days">Días</option>
               <option value="newest-first">Más recientes</option>
               <option value="oldest-first">Más antiguos</option>
             </select>
@@ -113,7 +127,7 @@ const FullList = () => {
                         })}
                       </div>
                     ) : (
-                      <p className=" -mt-6 mb-4">No items to show</p>
+                      <p className=" -mt-6 mb-4">No hay elementos para mostrar</p>
                     )}
                   </React.Fragment>
                 );
@@ -128,7 +142,7 @@ const FullList = () => {
               })}
 
           {!loading && allHabits.length < 1 && (
-            <div className="text-center mt-8">Your HABITit list is empty</div>
+            <div className="text-center mt-8">Tu lista HABITit está vacía</div>
           )}
           {loading && <div className="loader m-auto mt-12"></div>}
         </div>
