@@ -44,14 +44,14 @@ const Navbar = () => {
   return (
     <header
       className={`sticky top-0 z-50 backdrop-blur-md ${
-        isScrolled ? "border-b shadow-sm bg-white/70" : ""
+        isScrolled ? "border-b shadow-sm bg-/70" : ""
       }`}
     >
       <div className="max-w-7xl px-4 py-5 mx-auto flex justify-between items-center ">
         <div className="grow flex items-center ">
           {/* Enlace al inicio */}
           <Link to="/">
-            <h1 className="font-semibold text-2xl tracking-wide border-b-4 text-gray-600">
+            <h1 className="font-semibold text-2xl tracking-wide border-b-4 text--600">
               Hábitos<span className=" pl-px "></span>
             </h1>
           </Link>
