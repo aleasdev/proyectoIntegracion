@@ -2,10 +2,11 @@ const Habit = require("../models/habitModel");
 const Day = require("../models/dayModel");
 const mongoose = require("mongoose");
 
+// Función aún no implementada
 const updateHabitItsOnNewDay = () => {};
 
-//# get
-//-> get all habits
+//# Obtener
+// -> Obtener todos los hábitos
 const getAllHabits = async (req, res) => {
   const user_id = req.user._id;
   const habits = await Habit.find({ user_id }).sort({ createdAt: -1 });
@@ -18,7 +19,6 @@ const getAllHabits = async (req, res) => {
     if (dayFromDatabase[0]?.day) {
       if (dayFromDatabase[0].day !== dayFromFrontend) {
         for (let habit of habits) {
-          // console.log({ notupdatedHabit: habit });
           const updatedHabit = await Habit.findOneAndUpdate(
             { _id: habit._id },
             {
@@ -29,7 +29,6 @@ const getAllHabits = async (req, res) => {
             },
             { new: true }
           );
-          // console.log({ updatedHabit });
         }
         const updatedDay = await Day.findOneAndUpdate(
           { _id: dayFromDatabase[0]._id },
@@ -51,29 +50,28 @@ const getAllHabits = async (req, res) => {
     }
   }
 
-  // habits = await Habit.find({ user_id }).sort({ createdAt: -1 });
   res.status(200).json(habits);
 };
 
-//-> get a single habit
+// -> Obtener un solo hábito
 const getSingleHabit = async (req, res) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: "No such habit" });
+    return res.status(404).json({ error: "No existe ese hábito" });
   }
 
   const singleHabit = await Habit.findById(id);
 
   if (!singleHabit) {
-    return res.status(404).json({ error: "No such habit" });
+    return res.status(404).json({ error: "No existe ese hábito" });
   }
 
   res.status(200).json(singleHabit);
 };
 
-//# post
-//-> create a new habit
+//# Enviar
+// -> Crear un nuevo hábito
 const createNewHabit = async (req, res) => {
   const { title, reps } = req.body;
   const emptyFields = [];
@@ -82,46 +80,43 @@ const createNewHabit = async (req, res) => {
   if (emptyFields.length > 0) {
     return res
       .status(400)
-      .json({ error: "Please fill in all the fields", emptyFields });
+      .json({ error: "Por favor, completa todos los campos", emptyFields });
   }
 
-  // add new document(habit in our case) to db under the collection "Habit"
   try {
     const user_id = req.user._id;
-    console.log({ user_id });
-    const habit = await Habit.create({ title, reps, isDone: false, user_id }); // once a new document is created then in response we get that created document
-    console.log({ habit });
+    const habit = await Habit.create({ title, reps, isDone: false, user_id });
     res.status(200).json(habit);
   } catch (err) {
     res.status(400).json({ err: err.message });
   }
 };
 
-//# delete
-//-> delete a habit
+//# Eliminar
+// -> Eliminar un hábito
 const deleteAHabit = async (req, res) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: "No such habit" });
+    return res.status(404).json({ error: "No existe ese hábito" });
   }
 
   const deletedHabit = await Habit.findOneAndDelete({ _id: id });
 
   if (!deletedHabit) {
-    return res.status(400).json({ error: "No such habit" });
+    return res.status(400).json({ error: "No existe ese hábito" });
   }
 
   res.status(200).json(deletedHabit);
 };
 
-//# put, patch
-//-> update a habit
+//# Actualizar
+// -> Actualizar un hábito
 const updateAHabit = async (req, res) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: "No such habit" });
+    return res.status(404).json({ error: "No existe ese hábito" });
   }
 
   const updatedHabit = await Habit.findOneAndUpdate(
@@ -133,7 +128,7 @@ const updateAHabit = async (req, res) => {
   );
 
   if (!updatedHabit) {
-    return res.status(400).json({ error: "No such habit" });
+    return res.status(400).json({ error: "No existe ese hábito" });
   }
 
   res.status(200).json(updatedHabit);
