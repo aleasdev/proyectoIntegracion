@@ -5,6 +5,7 @@ import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { Link, useNavigate } from "react-router-dom";
 import usePatch from "../hooks/fetch/usePatch";
 import useDelete from "../hooks/fetch/useDelete";
+import { es } from 'date-fns/locale';
 
 // Componente para mostrar los detalles de un hábito
 const HabitDetails = ({ habit, noCompleteState = false }) => {
@@ -73,7 +74,7 @@ const HabitDetails = ({ habit, noCompleteState = false }) => {
       </div>
       <div className="text-sm text-slate-500">
         Creado&nbsp;
-        {formatDistanceToNow(new Date(createdAt), { addSuffix: true })}
+        {formatDistanceToNow(new Date(createdAt), { addSuffix: true, locale: es })}
       </div>
       <div className="flex gap-3 mt-1">
         {/* Icono para marcar como completado o no completado */}
