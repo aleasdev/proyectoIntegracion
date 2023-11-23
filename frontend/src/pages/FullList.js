@@ -32,7 +32,7 @@ const FullList = () => {
   };
 
   const sortHabits = (sortOption) => {
-    if (sortOption === "days") {
+    if (sortOption === "") {
       let categorizedHabits = [];
       if (allHabits.length > 0) {
         days.forEach((day) =>
@@ -79,15 +79,15 @@ const FullList = () => {
         <h2 className="text-center text-xl font-semibold">All HABITits</h2>
         <div className="flex items-center my-8">
           <label>
-            Sort by
+            Sortear por:
             <select
               value={sortOption}
               onChange={handleOptionChange}
               className="mx-1 pl-px pr-1 border focus:outline-0"
             >
               <option value="days">Days</option>
-              <option value="newest-first">Newest First</option>
-              <option value="oldest-first">Oldest First</option>
+              <option value="newest-first">Los mas nuevos</option>
+              <option value="oldest-first">Los mas antiguos</option>
             </select>
           </label>
         </div>

@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 
 export const days = [
   "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
+  "Lunes",
+  "Martes",
+  "Miercoles",
+  "Jueves",
+  "Viernes",
+  "Sabado",
 ];
 
 function useDay() {

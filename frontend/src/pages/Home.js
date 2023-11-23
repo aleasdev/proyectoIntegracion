@@ -57,7 +57,7 @@ const Home = () => {
           )}
           {!loading && todayHabits.length < 1 && (
             <div className="text-center">
-              Your HABITit list for today is empty
+              Tu lista de habitos está vacía por hoy.
             </div>
           )}
         </div>

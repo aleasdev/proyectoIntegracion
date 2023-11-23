@@ -95,10 +95,10 @@ const Signup = () => {
       onSubmit={handleSubmit}
       className="bg-white px-12 py-16 shadow-lg rounded-xl mt-8 w-full md:w-2/3 sm:mx-auto flex flex-col gap-4"
     >
-      <h4 className="text-lg text-center font-bold mb-2">Sign up</h4>
+      <h4 className="text-lg text-center font-bold mb-2">Registrarse</h4>
 
       <div className="w-full flex flex-col gap-2">
-        <label>Name :</label>
+        <label>Nombre :</label>
         <FormInput
           type="string"
           onChange={(e) => {
@@ -122,7 +122,7 @@ const Signup = () => {
       </div>
 
       <div className="w-full flex flex-col gap-2">
-        <label>Password :</label>
+        <label>Contraseña :</label>
         <FormInput
           type="password"
           onChange={(e) => setPassword(e.target.value)}

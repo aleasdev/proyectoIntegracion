@@ -22,7 +22,7 @@ const Quotes = () => {
     <div className="text-[#529B7C] mt-6 text-center italic text-lg font-semibold">
       " {quotes[+quoteIndex]} "{" "}
       <span className="text-gray-600 font-semibold text-xs">
-        ~ from Atomic Habits
+        ~ de Habitos Atómicos.
       </span>
     </div>
   );
