@@ -32,7 +32,7 @@ const FullList = () => {
   };
 
   const sortHabits = (sortOption) => {
-    if (sortOption === "") {
+    if (sortOption === "days") {
       let categorizedHabits = [];
       if (allHabits.length > 0) {
         days.forEach((day) =>
@@ -76,18 +76,18 @@ const FullList = () => {
   return (
     <div className="flex relative ">
       <div className="basis-full md:basis-4/5 md:pr-8 pb-12 md:border-r">
-        <h2 className="text-center text-xl font-semibold">All HABITits</h2>
+        <h2 className="text-center text-xl font-semibold">Todos los hábitos</h2>
         <div className="flex items-center my-8">
           <label>
-            Sortear por:
+            Sort by
             <select
               value={sortOption}
               onChange={handleOptionChange}
               className="mx-1 pl-px pr-1 border focus:outline-0"
             >
-              <option value="days">Days</option>
-              <option value="newest-first">Los mas nuevos</option>
-              <option value="oldest-first">Los mas antiguos</option>
+              <option value="days">Dias</option>
+              <option value="newest-first">Más recientes</option>
+              <option value="oldest-first">Más antiguos</option>
             </select>
           </label>
         </div>
