@@ -1,0 +1,37 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "./index.js",
+      "use": "@vercel/node"
+    }
+  ],
+
+  "controllers": [
+    {
+      "src": "/(.*)",
+      "dest": "/"
+    }
+  ],
+
+  "middleware": [
+    {
+      "src": "/(.*)",
+      "dest": "/"
+    }
+  ],
+
+  "models": [
+    {
+      "src": "/(.*)",
+      "dest": "/"
+    }
+  ],
+
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/"
+    }
+  ]
+}
