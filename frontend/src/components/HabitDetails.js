@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import usePatch from "../hooks/fetch/usePatch";
 import useDelete from "../hooks/fetch/useDelete";
 
+// Componente para mostrar los detalles de un hábito
 const HabitDetails = ({ habit, noCompleteState = false }) => {
   const { _id, title, reps, createdAt, isDone } = habit;
   const { dispatch } = useHabitsContext();
@@ -17,6 +18,7 @@ const HabitDetails = ({ habit, noCompleteState = false }) => {
   const iconStyle =
     "flex justify-center items-center cursor-pointer hover:bg-[#dbf0db] w-[28px] h-[28px] rounded-full active:bg-[#bce4bc] duration-500";
 
+  // Maneja la eliminación de un hábito
   const handleDelete = async () => {
     try {
       const res = await deleteRequest(`/habits/${_id}`, {
@@ -32,11 +34,13 @@ const HabitDetails = ({ habit, noCompleteState = false }) => {
     }
   };
 
+  // Maneja la edición de un hábito
   const handleEdit = () => {
     dispatch({ type: "TO_BE_EDITED", payload: habit });
     navigate("/edit");
   };
 
+  // Maneja el cambio de estado (completado/no completado) de un hábito
   const handleIsDone = async () => {
     const payload = { title, reps, isDone: !isDone };
 
@@ -62,15 +66,17 @@ const HabitDetails = ({ habit, noCompleteState = false }) => {
         !noCompleteState && isDone ? "bg-[#f0fff0]" : "bg-white/70"
       } ${!noCompleteState && isDone ? "" : "hover:bg-[#f9fff9]"} `}
     >
+      {/* Título del hábito */}
       <h4 className="text-lg font-semibold text-[#529B7C]">{title}</h4>
       <div className="text-sm text-slate-500">
-        Reps : {reps.length === 7 ? "Everyday" : reps.join(", ")}
+        Repeticiones: {reps.length === 7 ? "Todos los días" : reps.join(", ")}
       </div>
       <div className="text-sm text-slate-500">
-        Created&nbsp;
+        Creado&nbsp;
         {formatDistanceToNow(new Date(createdAt), { addSuffix: true })}
       </div>
       <div className="flex gap-3 mt-1">
+        {/* Icono para marcar como completado o no completado */}
         {!noCompleteState && (
           <i
             className={`ml-auto fa fa-check ${iconStyle} ${
@@ -82,6 +88,7 @@ const HabitDetails = ({ habit, noCompleteState = false }) => {
           ></i>
         )}
 
+        {/* Icono para editar el hábito */}
         <i
           className={`${
             noCompleteState ? "ml-auto" : ""
@@ -89,6 +96,7 @@ const HabitDetails = ({ habit, noCompleteState = false }) => {
           onClick={handleEdit}
         ></i>
 
+        {/* Icono para eliminar el hábito */}
         <i className={` fa fa-trash ${iconStyle}`} onClick={handleDelete}></i>
       </div>
     </div>

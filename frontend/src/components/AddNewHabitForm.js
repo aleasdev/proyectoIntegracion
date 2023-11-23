@@ -8,7 +8,7 @@ import usePost from "../hooks/fetch/usePost";
 import { useHabitsContext } from "../hooks/useHabitsContext";
 import { days } from "../utils/date";
 
-// styles with many classes and same classes
+// Estilos con muchas clases y las mismas clases
 const styles = {
   inputStyle:
     "bg-white/60 px-4 py-1 outline outline-1 outline-slate-300/70 text-sm rounded-full focus:rounded-full focus:outline-2 focus:outline-[#92dbbC]",
@@ -20,6 +20,7 @@ const styles = {
   colCenter: "flex flex-col justify-center items-center gap-2",
 };
 
+// Componente del formulario para añadir/editar hábitos
 const AddNewHabitForm = ({ edit = false }) => {
   const [newHabit, setNewHabit] = useState("");
   const [reps, setReps] = useState([]);
@@ -39,6 +40,7 @@ const AddNewHabitForm = ({ edit = false }) => {
 
   console.log({ toBeEdited });
 
+  // Maneja el clic en "Everyday" para establecer o limpiar los días seleccionados
   const handleOnClickEveryday = () => {
     setErrorMessage((errorMessage) => {
       return { ...errorMessage, reps: "" };
@@ -51,6 +53,7 @@ const AddNewHabitForm = ({ edit = false }) => {
     }
   };
 
+  // Maneja el clic en un día específico para agregarlo o quitarlo de los días seleccionados
   const handleOnClickSpecificDay = (day) => {
     setErrorMessage((errorMessage) => {
       return { ...errorMessage, reps: "" };
@@ -62,16 +65,17 @@ const AddNewHabitForm = ({ edit = false }) => {
     }
   };
 
+  // Maneja el envío del formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (newHabit.trim().length === 0 || reps.length === 0) {
       newHabit.trim().length === 0 &&
         setErrorMessage((errorMessage) => {
-          return { ...errorMessage, newHabit: "Required" };
+          return { ...errorMessage, newHabit: "Campo obligatorio" };
         });
       reps.length === 0 &&
         setErrorMessage((errorMessage) => {
-          return { ...errorMessage, reps: "Select at least one day" };
+          return { ...errorMessage, reps: "Selecciona al menos un día" };
         });
     } else {
       if (!edit) {
@@ -89,7 +93,7 @@ const AddNewHabitForm = ({ edit = false }) => {
           console.log({ data });
 
           if (data) {
-            toast.success("Successfully added");
+            toast.success("Añadido exitosamente");
             dispatch({ type: "ADD_HABIT", payload: data });
             setNewHabit("");
             setReps([]);
@@ -102,7 +106,7 @@ const AddNewHabitForm = ({ edit = false }) => {
           console.log(err);
           alert(
             err.message +
-              ". May be you didn't fill all the fields. Otherwise please check your internet connection."
+              ". Puede que no hayas completado todos los campos. De lo contrario, verifica tu conexión a Internet."
           );
           setLoading(false);
         }
@@ -124,7 +128,7 @@ const AddNewHabitForm = ({ edit = false }) => {
           console.log({ data });
 
           if (data) {
-            toast.success("Successfully updated");
+            toast.success("Actualizado exitosamente");
             console.log({ posted: data });
             dispatch({ type: "UPDATE_HABIT", payload: data });
             setNewHabit("");
@@ -138,7 +142,7 @@ const AddNewHabitForm = ({ edit = false }) => {
           console.log(err);
           alert(
             err.message +
-              ". May be you didn't fill all the fields. Otherwise please check your internet connection."
+              ". Puede que no hayas completado todos los campos. De lo contrario, verifica tu conexión a Internet."
           );
           setLoading(false);
         }
@@ -146,6 +150,7 @@ const AddNewHabitForm = ({ edit = false }) => {
     }
   };
 
+  // Establece los valores iniciales al editar
   useEffect(() => {
     if (edit) {
       setNewHabit(toBeEdited.title);
@@ -156,15 +161,15 @@ const AddNewHabitForm = ({ edit = false }) => {
   return (
     <div className={`${styles.colCenter} gap-6`}>
       <div className={`${styles.rowCenter} font-medium`}>
-        {!edit ? "Add New" : "Edit the Selected"}
+        {!edit ? "Añadir nuevo" : "Editar el seleccionado"}
         <span className="tracking-wide font-medium text-[#529B7C]">
-          &nbsp;HABITit&nbsp;
+          &nbsp;HÁBITO&nbsp;
         </span>
       </div>
       <form onSubmit={handleSubmit}>
         <div className={`${styles.colCenter} gap-4`}>
           <div className={styles.colCenter}>
-            <h4>Make a habit of :</h4>
+            <h4>Haz un hábito de:</h4>
             <input
               name="newHabit"
               id="newHabit"
@@ -175,21 +180,21 @@ const AddNewHabitForm = ({ edit = false }) => {
                   return { ...errorMessage, newHabit: "" };
                 });
               }}
-              placeholder="Doing something..."
+              placeholder="Haciendo algo..."
               className={styles.inputStyle}
             />
             <p className="text-red-400 text-sm">{errorMessage.newHabit}</p>
           </div>
           <div className={styles.colCenter}>
-            <h4 className="text-center">Repeat it :</h4>
-            <div className={`${styles.rowCenter} gap-2 flex-wrap`}>
+            <h4 className="text-center">Repite esto:</h4>
+                        <div className={`${styles.rowCenter} gap-2 flex-wrap`}>
               <span
                 className={`${
                   reps.length === 7 ? styles.selected : styles.notSelected
                 }`}
                 onClick={handleOnClickEveryday}
               >
-                Everyday
+                Todos los días
               </span>
               {days.map((day) => (
                 <span
@@ -211,7 +216,7 @@ const AddNewHabitForm = ({ edit = false }) => {
           <div className={`${styles.rowCenter} font-semibold`}>
             <input
               type="submit"
-              value="Submit"
+              value="Enviar"
               disabled={loading}
               className={`bg-white/60 hover:bg-gray-100 hover:border-gray-400 text-xs px-3 py-1 border-2 border-gray-400/50 rounded-full cursor-pointer focus:border-gray-500/80 focus:outline focus:outline-[#92dbbC] transition-colors ease-in-out duration-300 ${
                 loading ? "text-gray-300" : ""
@@ -237,3 +242,5 @@ const AddNewHabitForm = ({ edit = false }) => {
 };
 
 export default AddNewHabitForm;
+
+
