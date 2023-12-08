@@ -17,7 +17,7 @@ const Signup = () => {
 
   // Función para manejar el envío del formulario
   const handleSubmit = async (e) => {
-    console.log({ password });
+    
     e.preventDefault();
     // Validar campos requeridos
     if (name.trim() === "" || email.trim() === "" || password.trim() === "") {
@@ -46,11 +46,15 @@ const Signup = () => {
       return;
     }
     // Validar longitud mínima de la contraseña
-    if (password.length < 6) {
+    // Minimum eight characters, at least one upper case English letter, one lower case English letter, one number and one special character
+    //Minimo 6 caracteres, al menos 1 mayuscula, al menos 1 numero y un valor especial (#?!@$ %^&*-)
+    const passwordRegEx = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{6,}$/;  
+
+    if (!passwordRegEx.test(password)) {
       setErrorMessage((prev) => {
         return {
           ...prev,
-          password: "Se requieren al menos 6 caracteres",
+          password: "Minimo 6 caracteres, al menos 1 mayuscula, al menos 1 numero y un valor especial (#?!@$ %^&*-)",
         };
       });
       return;

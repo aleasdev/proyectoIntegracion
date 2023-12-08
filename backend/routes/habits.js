@@ -21,7 +21,12 @@ router.get("/", getAllHabits);
 router.get("/:id", getSingleHabit);
 
 //-> POST/add/create a new habit
-router.post("/", createNewHabit);
+router.post("/", (req, res) => {
+  // Log the received data
+  console.log("Received data:", req.body);
+
+   createNewHabit(req, res);
+});
 
 //-> DELETE/remove a habit
 router.delete("/:id", deleteAHabit);

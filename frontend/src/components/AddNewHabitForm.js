@@ -38,7 +38,12 @@ const AddNewHabitForm = ({ edit = false }) => {
     error: patchError,
   } = usePatch();
 
-  console.log({ toBeEdited });
+  const [reminders, setReminders] = useState([]);
+  const [newReminder, setNewReminder] = useState("");
+
+
+
+  //console.log({ toBeEdited });
 
   // Maneja el clic en "Everyday" para establecer o limpiar los días seleccionados
   const handleOnClickEveryday = () => {
@@ -82,10 +87,15 @@ const AddNewHabitForm = ({ edit = false }) => {
         setLoading(true);
         const orderedReps = days.filter((day) => reps.includes(day));
         const payload = {
-          title: newHabit,
-          reps: orderedReps,
-        };
+            title: newHabit,
+            reps: orderedReps,
+            isDone: false,
+            reminder: reminders,
+          };
+          console.error(reminders)
+          console.error(orderedReps)
         try {
+          
           const res = await postRequest("/habits", payload, {
             withAuthHeader: true,
           });
@@ -118,7 +128,8 @@ const AddNewHabitForm = ({ edit = false }) => {
         const payload = {
           title: newHabit,
           reps: orderedReps,
-          isDone: toBeEdited.isDone,
+          isDone: false,
+          reminder: reminders,
         };
         try {
           const res = await patchRequest(`/habits/${toBeEdited._id}`, payload, {
@@ -212,6 +223,44 @@ const AddNewHabitForm = ({ edit = false }) => {
             </div>
             <p className="text-red-400 text-sm">{errorMessage.reps}</p>
           </div>
+
+
+          <input
+            type="time" // Change to text for storing as String
+            name="newReminder"
+            id="newReminder"
+            value={newReminder}
+            onChange={(e) => setNewReminder(e.target.value)}
+            placeholder="Añadir recordatorio..."
+            className={styles.inputStyle}
+          />
+          <button
+            onClick={() => {
+              setReminders([...reminders, newReminder]); // Add directly to the reminders array
+              setNewReminder(""); // Clear new reminder input
+            }}
+            disabled={!newReminder}
+            className="bg-white/60 hover:bg-gray-100 hover:border-gray-400 text-xs px-3 py-1 border-2 border-gray-400/50 rounded-full cursor-pointer active:border-gray-500/80 active:outline active:outline-[#92dbbC] transition-colors ease-in-out duration-300"
+          >
+            Agregar recordatorio
+          </button>
+
+          <ul className="list-none flex flex-col gap-2">
+            {reminders.map((reminder) => (
+              <li key={reminder}>
+                <span className="font-medium">{reminder}</span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setReminders(reminders.filter((r) => r !== reminder)); // Remove reminder directly from the array
+                  }}
+                >
+                  <i className="fa fa-times" aria-hidden="true"></i>
+                </button>
+              </li>
+            ))}
+          </ul>
+
 
           <div className={`${styles.rowCenter} font-semibold`}>
             <input

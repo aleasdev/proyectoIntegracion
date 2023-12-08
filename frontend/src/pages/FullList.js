@@ -142,7 +142,7 @@ const FullList = () => {
               })}
 
           {!loading && allHabits.length < 1 && (
-            <div className="text-center mt-8">Tu lista HABITit está vacía</div>
+            <div className="text-center mt-8">Tu lista de hábitos está vacía</div>
           )}
           {loading && <div className="loader m-auto mt-12"></div>}
         </div>
