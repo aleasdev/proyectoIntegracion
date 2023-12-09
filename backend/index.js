@@ -4,6 +4,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const habitRoutes = require("./routes/habits");
 const userRoutes = require("./routes/user");
+const pomodoroRoutes = require("./routes/pomodoros")
 
 //-> express app
 const app = express();
@@ -34,6 +35,7 @@ app.use((req, res, next) => {
 //-> registering the routes to our main app
 app.use("/api/habits", habitRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/pomodoro", pomodoroRoutes);
 
 //-> connect to db
 mongoose

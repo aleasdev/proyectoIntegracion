@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Welcome from "./pages/Welcome";
+import PomodoroPage from "./pages/Pomodoro"
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -59,6 +60,7 @@ function App() {
                   element={!user ? <Signup /> : <Navigate to="/" />}
                 />
                 <Route path="/welcome" element={<Welcome />} />
+                <Route path="/pomodoro" element={<PomodoroPage />} />
               </Routes>
             </div>
           </div>
