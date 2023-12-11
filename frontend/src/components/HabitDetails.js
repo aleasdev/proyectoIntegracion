@@ -9,7 +9,7 @@ import { es } from 'date-fns/locale';
 
 // Componente para mostrar los detalles de un hábito
 const HabitDetails = ({ habit, noCompleteState = false }) => {
-  const { _id, title, reps, createdAt, isDone } = habit;
+  const { _id, title, reps, reminders, createdAt, isDone } = habit;
   const { dispatch } = useHabitsContext();
   const { patchRequest } = usePatch();
   const { deleteRequest } = useDelete();
@@ -43,7 +43,7 @@ const HabitDetails = ({ habit, noCompleteState = false }) => {
 
   // Maneja el cambio de estado (completado/no completado) de un hábito
   const handleIsDone = async () => {
-    const payload = { title, reps, isDone: !isDone };
+    const payload = { title, reps,reminders, isDone: !isDone };
 
     try {
       const res = await patchRequest(`/habits/${_id}`, payload, {
@@ -76,6 +76,10 @@ const HabitDetails = ({ habit, noCompleteState = false }) => {
         Creado&nbsp;
         {formatDistanceToNow(new Date(createdAt), { addSuffix: true, locale: es })}
       </div>
+      <div className="text-sm text-slate-500">
+        Recordatorios: {reminders.join(", ")}
+      </div>
+    
       <div className="flex gap-3 mt-1">
         {/* Icono para marcar como completado o no completado */}
         {!noCompleteState && (

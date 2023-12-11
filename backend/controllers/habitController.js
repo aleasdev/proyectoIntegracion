@@ -24,6 +24,7 @@ const getAllHabits = async (req, res) => {
             {
               title: habit.title,
               reps: habit.reps,
+              reminders: habit.reminders,
               isDone: false,
               user_id: habit.user_id,
             },
@@ -73,10 +74,11 @@ const getSingleHabit = async (req, res) => {
 //# Enviar
 // -> Crear un nuevo hábito
 const createNewHabit = async (req, res) => {
-  const { title, reps } = req.body;
+  const { title, reps, reminders } = req.body;
   const emptyFields = [];
   if (!title) emptyFields.push("title");
   if (!reps) emptyFields.push("reps");
+  if (!reminders) emptyFields.push("reminders")
   if (emptyFields.length > 0) {
     return res
       .status(400)
@@ -85,7 +87,7 @@ const createNewHabit = async (req, res) => {
 
   try {
     const user_id = req.user._id;
-    const habit = await Habit.create({ title, reps, isDone: false, user_id });
+    const habit = await Habit.create({ title, reps, reminders, isDone: false, user_id });
     res.status(200).json(habit);
   } catch (err) {
     res.status(400).json({ err: err.message });

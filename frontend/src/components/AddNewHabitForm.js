@@ -89,8 +89,9 @@ const AddNewHabitForm = ({ edit = false }) => {
         const payload = {
             title: newHabit,
             reps: orderedReps,
-            isDone: false,
-            reminder: reminders,
+            reminders,
+            isDone: false
+            
           };
           console.error(reminders)
           console.error(orderedReps)
@@ -107,6 +108,7 @@ const AddNewHabitForm = ({ edit = false }) => {
             dispatch({ type: "ADD_HABIT", payload: data });
             setNewHabit("");
             setReps([]);
+            setReminders([])
             setLoading(false);
             if (pathname.includes("create")) {
               navigate("/");
@@ -129,7 +131,7 @@ const AddNewHabitForm = ({ edit = false }) => {
           title: newHabit,
           reps: orderedReps,
           isDone: false,
-          reminder: reminders,
+          reminders,
         };
         try {
           const res = await patchRequest(`/habits/${toBeEdited._id}`, payload, {
@@ -144,6 +146,7 @@ const AddNewHabitForm = ({ edit = false }) => {
             dispatch({ type: "UPDATE_HABIT", payload: data });
             setNewHabit("");
             setReps([]);
+            setReminders([])
             setLoading(false);
             if (pathname.includes("edit")) {
               navigate(-1);
@@ -166,6 +169,8 @@ const AddNewHabitForm = ({ edit = false }) => {
     if (edit) {
       setNewHabit(toBeEdited.title);
       setReps(toBeEdited.reps);
+      setReminders(toBeEdited.reminders)
+      
     }
   }, []);
 
