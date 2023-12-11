@@ -67,24 +67,39 @@ const HabitDetails = ({ habit, noCompleteState = false }) => {
 const [hasNotified, setHasNotified] = useState(false);
  
   useEffect(() => {
-    const checkReminders = setInterval(() => {
-      const now = new Date();
-      const currentHour = now.getHours();
-      const currentMinutes = now.getMinutes();
+      const checkReminders = setInterval(() => {
+        const now = new Date();
+        const currentHour = now.getHours();
+        const currentMinutes = now.getMinutes();
+        const currentDay = now.getDay();
 
-      reminders.forEach(reminder => {
-        const [reminderHour, reminderMinutes] = reminder.split(':').map(Number);
+        // Map from day number to day name in Spanish
+        const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
 
-        if (!hasNotified && reminderHour === currentHour && reminderMinutes === currentMinutes) {
-          toast(`It's time for ${title}!`);
-          setHasNotified(true);
-        }
-      });
-    }, 1000); // Check every minute
+        reminders.forEach(reminder => {
+          const [reminderHour, reminderMinutes] = reminder.split(':').map(Number);
 
-    // Clear the interval when the component unmounts
-    return () => clearInterval(checkReminders);
-  }, [reminders, title, hasNotified]);
+          reps.forEach(rep => {
+            if (!hasNotified && reminderHour === currentHour && reminderMinutes === currentMinutes && rep === days[currentDay]) {
+              toast(`¡Hola! Es hora de cumplir tu hábito: "${title}". ¡Vamos, tú puedes hacerlo!`, {
+                autoClose: false,
+                hideProgressBar: true,
+                closeOnClick: true,
+                draggable: true,
+                progress: undefined,
+                style: { backgroundColor: '#529B7C', color: 'white', fontWeight: 'bold' },
+                icon: '👋',
+                position: 'top-right',
+                });
+              setHasNotified(true);
+            }
+          });
+        });
+      }, 1000); // Check every minute
+
+      // Clear the interval when the component unmounts
+      return () => clearInterval(checkReminders);
+    }, [reminders, reps, title, hasNotified]);
 
   return (
     <div
