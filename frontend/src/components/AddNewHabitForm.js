@@ -1,8 +1,8 @@
-import axios from "axios";
+//import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import axiosClient from "../api/axiosClient";
+//import axiosClient from "../api/axiosClient";
 import usePatch from "../hooks/fetch/usePatch";
 import usePost from "../hooks/fetch/usePost";
 import { useHabitsContext } from "../hooks/useHabitsContext";
@@ -173,6 +173,10 @@ const AddNewHabitForm = ({ edit = false }) => {
       
     }
   }, []);
+
+ 
+  
+
 
   return (
     <div className={`${styles.colCenter} gap-6`}>

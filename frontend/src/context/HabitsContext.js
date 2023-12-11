@@ -106,7 +106,7 @@ export const HabitsContextProvider = ({ children }) => {
     allHabits: [],
     sortedHabits: [],
     sortOption: initialSortOption,
-    toBeEdited: { title: "", reps: [] },
+    toBeEdited: { title: "", reps: [], reminders: [] },
     quoteIndex: initialQuoteIndex,
     date: formattedDate,
   });

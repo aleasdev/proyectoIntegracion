@@ -1,11 +1,14 @@
-import axios from "axios";
-import React, { useState } from "react";
+//import axios from "axios";
+import React, { useState, useEffect } from "react";
 import { useHabitsContext } from "../hooks/useHabitsContext";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { Link, useNavigate } from "react-router-dom";
 import usePatch from "../hooks/fetch/usePatch";
 import useDelete from "../hooks/fetch/useDelete";
 import { es } from 'date-fns/locale';
+
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Componente para mostrar los detalles de un hábito
 const HabitDetails = ({ habit, noCompleteState = false }) => {
@@ -60,6 +63,28 @@ const HabitDetails = ({ habit, noCompleteState = false }) => {
       alert(err.message);
     }
   };
+
+const [hasNotified, setHasNotified] = useState(false);
+ 
+  useEffect(() => {
+    const checkReminders = setInterval(() => {
+      const now = new Date();
+      const currentHour = now.getHours();
+      const currentMinutes = now.getMinutes();
+
+      reminders.forEach(reminder => {
+        const [reminderHour, reminderMinutes] = reminder.split(':').map(Number);
+
+        if (!hasNotified && reminderHour === currentHour && reminderMinutes === currentMinutes) {
+          toast(`It's time for ${title}!`);
+          setHasNotified(true);
+        }
+      });
+    }, 1000); // Check every minute
+
+    // Clear the interval when the component unmounts
+    return () => clearInterval(checkReminders);
+  }, [reminders, title, hasNotified]);
 
   return (
     <div
