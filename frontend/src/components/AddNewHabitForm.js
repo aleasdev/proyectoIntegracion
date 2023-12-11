@@ -7,6 +7,8 @@ import usePatch from "../hooks/fetch/usePatch";
 import usePost from "../hooks/fetch/usePost";
 import { useHabitsContext } from "../hooks/useHabitsContext";
 import { days } from "../utils/date";
+import notificationSound from '../sounds/info-sound.mp3';
+
 
 // Estilos con muchas clases y las mismas clases
 const styles = {
@@ -104,7 +106,9 @@ const AddNewHabitForm = ({ edit = false }) => {
           console.log({ data });
 
           if (data) {
+
             toast.success("Añadido exitosamente");
+            new Audio(notificationSound).play();
             dispatch({ type: "ADD_HABIT", payload: data });
             setNewHabit("");
             setReps([]);

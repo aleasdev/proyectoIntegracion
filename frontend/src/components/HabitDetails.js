@@ -7,6 +7,11 @@ import usePatch from "../hooks/fetch/usePatch";
 import useDelete from "../hooks/fetch/useDelete";
 import { es } from 'date-fns/locale';
 
+import notificationSound from '../sounds/success-sound.mp3';
+import notificationSoundBring from '../sounds/bring.mp3';
+
+
+
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -47,6 +52,9 @@ const HabitDetails = ({ habit, noCompleteState = false }) => {
   // Maneja el cambio de estado (completado/no completado) de un hábito
   const handleIsDone = async () => {
     const payload = { title, reps,reminders, isDone: !isDone };
+    if(!isDone){
+      new Audio(notificationSoundBring).play();
+    }
 
     try {
       const res = await patchRequest(`/habits/${_id}`, payload, {
@@ -54,6 +62,7 @@ const HabitDetails = ({ habit, noCompleteState = false }) => {
       });
       const data = res.data;
       console.log({ upDatedForIsDone: data });
+      
 
       if (data) {
         dispatch({ type: "UPDATE_HABIT", payload: data });
@@ -81,6 +90,9 @@ const [hasNotified, setHasNotified] = useState(false);
 
           reps.forEach(rep => {
             if (!hasNotified && reminderHour === currentHour && reminderMinutes === currentMinutes && rep === days[currentDay]) {
+
+              new Audio(notificationSound).play();
+
               toast(`¡Hola! Es hora de cumplir tu hábito: "${title}". ¡Vamos, tú puedes hacerlo!`, {
                 autoClose: false,
                 hideProgressBar: true,
