@@ -12,6 +12,10 @@ const habitSchema = new Schema(
       type: [String],
       validate: (v) => Array.isArray(v) && v.length > 0,
     },
+    reminders: {
+        type: [String],
+        
+    },
     isDone: {
       type: Boolean,
       required: true,

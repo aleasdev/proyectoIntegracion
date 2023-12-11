@@ -1,5 +1,5 @@
-import axios from "axios";
-import React, { useState } from "react";
+//import axios from "axios";
+import React, { useState, useEffect } from "react";
 import { useHabitsContext } from "../hooks/useHabitsContext";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { Link, useNavigate } from "react-router-dom";
@@ -7,9 +7,17 @@ import usePatch from "../hooks/fetch/usePatch";
 import useDelete from "../hooks/fetch/useDelete";
 import { es } from 'date-fns/locale';
 
+import notificationSound from '../sounds/success-sound.mp3';
+import notificationSoundBring from '../sounds/bring.mp3';
+
+
+
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 // Componente para mostrar los detalles de un hábito
 const HabitDetails = ({ habit, noCompleteState = false }) => {
-  const { _id, title, reps, createdAt, isDone } = habit;
+  const { _id, title, reps, reminders, createdAt, isDone } = habit;
   const { dispatch } = useHabitsContext();
   const { patchRequest } = usePatch();
   const { deleteRequest } = useDelete();
@@ -43,7 +51,10 @@ const HabitDetails = ({ habit, noCompleteState = false }) => {
 
   // Maneja el cambio de estado (completado/no completado) de un hábito
   const handleIsDone = async () => {
-    const payload = { title, reps, isDone: !isDone };
+    const payload = { title, reps,reminders, isDone: !isDone };
+    if(!isDone){
+      new Audio(notificationSoundBring).play();
+    }
 
     try {
       const res = await patchRequest(`/habits/${_id}`, payload, {
@@ -51,6 +62,7 @@ const HabitDetails = ({ habit, noCompleteState = false }) => {
       });
       const data = res.data;
       console.log({ upDatedForIsDone: data });
+      
 
       if (data) {
         dispatch({ type: "UPDATE_HABIT", payload: data });
@@ -60,6 +72,46 @@ const HabitDetails = ({ habit, noCompleteState = false }) => {
       alert(err.message);
     }
   };
+
+const [hasNotified, setHasNotified] = useState(false);
+ 
+  useEffect(() => {
+      const checkReminders = setInterval(() => {
+        const now = new Date();
+        const currentHour = now.getHours();
+        const currentMinutes = now.getMinutes();
+        const currentDay = now.getDay();
+
+        // Map from day number to day name in Spanish
+        const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+
+        reminders.forEach(reminder => {
+          const [reminderHour, reminderMinutes] = reminder.split(':').map(Number);
+
+          reps.forEach(rep => {
+            if (!hasNotified && reminderHour === currentHour && reminderMinutes === currentMinutes && rep === days[currentDay]) {
+
+              new Audio(notificationSound).play();
+
+              toast(`¡Hola! Es hora de cumplir tu hábito: "${title}". ¡Vamos, tú puedes hacerlo!`, {
+                autoClose: false,
+                hideProgressBar: true,
+                closeOnClick: true,
+                draggable: true,
+                progress: undefined,
+                style: { backgroundColor: '#529B7C', color: 'white', fontWeight: 'bold' },
+                icon: '👋',
+                position: 'top-right',
+                });
+              setHasNotified(true);
+            }
+          });
+        });
+      }, 1000); // Check every minute
+
+      // Clear the interval when the component unmounts
+      return () => clearInterval(checkReminders);
+    }, [reminders, reps, title, hasNotified]);
 
   return (
     <div
@@ -76,6 +128,10 @@ const HabitDetails = ({ habit, noCompleteState = false }) => {
         Creado&nbsp;
         {formatDistanceToNow(new Date(createdAt), { addSuffix: true, locale: es })}
       </div>
+      <div className="text-sm text-slate-500">
+        Recordatorios: {reminders.join(", ")}
+      </div>
+    
       <div className="flex gap-3 mt-1">
         {/* Icono para marcar como completado o no completado */}
         {!noCompleteState && (

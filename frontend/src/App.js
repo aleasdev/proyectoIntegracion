@@ -12,10 +12,15 @@ import Welcome from "./pages/Welcome";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import React, { useEffect } from 'react';
+
 function App() {
   const { user } = useUserContext();
   const browsed = JSON.parse(localStorage.getItem("browsed"));
   console.log({ browsed });
+
+  
+  
   return (
     <>
       <BrowserRouter>
@@ -71,8 +76,3 @@ function App() {
 }
 
 export default App;
-
-// frontend - https://habit-it.onrender.com/
-// backend - https://habitit.onrender.com/
-
-// Our free tier does spin down after 15 minutes of inactivity, so the first request after the service is spun down make take a while

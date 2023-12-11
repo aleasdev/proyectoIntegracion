@@ -42,14 +42,7 @@ const useDelete = () => {
   }, [loading]);
 
   // Efecto para mostrar la notificación después de un retraso específico
-  useEffect(() => {
-    if (loading && showNotificationOnDelay) {
-      toast.info(
-        "Podrías experimentar cierto retraso debido a la política de inactividad de 15 minutos aplicada por render.com para sus planes gratuitos.",
-        { autoClose: 10000 }
-      );
-    }
-  }, [showNotificationOnDelay]);
+  
 
   // Devolver las variables y la función de solicitud de eliminación
   return { deleteRequest, loading, error };

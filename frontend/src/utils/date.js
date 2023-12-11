@@ -56,7 +56,7 @@ function useDate() {
         console.log({ day, today });
         setDay(today);
       }
-    }, 1000);
+          }, 1000);
     return () => clearInterval(secondInterval);
   }, []);
 
