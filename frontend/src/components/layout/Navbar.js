@@ -51,7 +51,7 @@ const Navbar = () => {
         <div className="grow flex items-center ">
           {/* Enlace al inicio */}
           <Link to="/">
-            <h1 className="font-semibold text-2xl tracking-wide border-b-4 text--600">
+            <h1 className="font-semibold text-2xl tracking-wide  text--600">
               Hábitos<span className=" pl-px "></span>
             </h1>
           </Link>
@@ -61,6 +61,8 @@ const Navbar = () => {
             {/* Enlaces de la barra de navegación */}
             <NavbarLink to="/">Inicio</NavbarLink>
             <NavbarLink to="/full-list">Todos los Hábitos</NavbarLink>
+            <a className=" hover:text-gray-700 cursor-pointer flex flex-col justify-center items-center  duration-500 after:opacity-0 hover:after:opacity-100  after:content-['']   after:h-[3px] after:bg-gray-700  after:transform after:duration-500 after:w-0 hover:after:w-full after:-mt-[2px] text-gray-700 " href="https://habitos-newsteller.netlify.app">Newsteller</a>
+      
           </div>
           <div className="flex items-center divide-x divide-solid divide-gray-400/50 border rounded-md bg-[#e9eae9] ">
             {!user ? (
