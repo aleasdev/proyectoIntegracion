@@ -37,3 +37,14 @@ body {
     transform: rotate(360deg);
   }
 }
+
+
+.survey {
+  width: 100%;
+}
+.survey .survey__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}

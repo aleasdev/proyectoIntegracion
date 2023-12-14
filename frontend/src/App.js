@@ -4,6 +4,7 @@ import Navbar from "./components/layout/Navbar";
 import useUserContext from "./hooks/useUserContext";
 import Create from "./pages/Create";
 import Edit from "./pages/Edit";
+import Survey from "./pages/Survey";
 import FullList from "./pages/FullList";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -48,6 +49,18 @@ function App() {
                   element={
                     user ? (
                       <FullList />
+                    ) : !browsed ? (
+                      <Navigate to="/welcome" />
+                    ) : (
+                      <Navigate to="/login" />
+                    )
+                  }
+                />
+                <Route
+                  path="/survey"
+                  element={
+                    user ? (
+                      <Survey />
                     ) : !browsed ? (
                       <Navigate to="/welcome" />
                     ) : (
