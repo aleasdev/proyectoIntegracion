@@ -62,13 +62,11 @@ const Navbar = () => {
               (navbarOpen ? " flex" : " hidden")
             }>
                     <div className="flex gap-4 mt-[2px]">
-                        {/* Enlaces de la barra de navegación */}
-                        
                         <a
                             className=" hover:text-gray-700 cursor-pointer flex flex-col justify-center items-center  duration-500 after:opacity-0 hover:after:opacity-100  after:content-['']   after:h-[3px] after:bg-gray-700  after:transform after:duration-500 after:w-0 hover:after:w-full after:-mt-[2px] text-gray-700 "
-                            href="https://habitos-newsteller.netlify.app"
+                            href="https://habitos-newsletter.netlify.app"
                         >
-                            Newsteller
+                            Newsletter
                         </a>
                     </div>
                     
