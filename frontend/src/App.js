@@ -9,9 +9,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Welcome from "./pages/Welcome";
-import Timer from "./components/pomodoro/Timer";
-import Settings from "./components/pomodoro/Settings";
-import SettingsContext from "./components/pomodoro/SettingsContext";
+import Pomodoro from "./pages/Pomodoro"
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -22,25 +20,9 @@ function App() {
   const browsed = JSON.parse(localStorage.getItem("browsed"));
   console.log({ browsed });
 
-  const [showSettings, setShowSettings] = useState(false);
-  const [workMinutes, setWorkMinutes] = useState(45);
-  const [breakMinutes, setBreakMinutes] = useState(15);
-  
   return (
     <>
       <BrowserRouter>
-        <div>
-          <SettingsContext.Provider value={{
-            showSettings,
-            setShowSettings,
-            workMinutes,
-            breakMinutes,
-            setWorkMinutes,
-            setBreakMinutes,
-            }}>
-            {showSettings ? <Settings /> : <Timer />}
-         </SettingsContext.Provider>
-        </div>
         <div className="min-h-screen flex flex-col justify-between text-slate-600">
           <div className="w-full">
             <Navbar />
@@ -51,6 +33,18 @@ function App() {
                   element={
                     user ? (
                       <Home />
+                    ) : !browsed ? (
+                      <Navigate to="/welcome" />
+                    ) : (
+                      <Navigate to="/login" />
+                    )
+                  }
+                />
+                <Route
+                  path="/pomodoro"
+                  element={
+                    user ? (
+                      <Pomodoro />
                     ) : !browsed ? (
                       <Navigate to="/welcome" />
                     ) : (
