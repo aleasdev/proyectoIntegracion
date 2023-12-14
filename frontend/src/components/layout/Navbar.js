@@ -61,6 +61,7 @@ const Navbar = () => {
             {/* Enlaces de la barra de navegación */}
             <NavbarLink to="/">Inicio</NavbarLink>
             <NavbarLink to="/full-list">Todos los Hábitos</NavbarLink>
+            <NavbarLink to="/pomodoro">Pomodoro</NavbarLink>
           </div>
           <div className="flex items-center divide-x divide-solid divide-gray-400/50 border rounded-md bg-[#e9eae9] ">
             {!user ? (

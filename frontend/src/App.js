@@ -40,18 +40,6 @@ function App() {
                     )
                   }
                 />
-                <Route
-                  path="/pomodoro"
-                  element={
-                    user ? (
-                      <Pomodoro />
-                    ) : !browsed ? (
-                      <Navigate to="/welcome" />
-                    ) : (
-                      <Navigate to="/login" />
-                    )
-                  }
-                />
                 <Route path="/create" element={<Create />} />
                 <Route path="/edit" element={<Edit />} />
                 <Route
@@ -59,6 +47,18 @@ function App() {
                   element={
                     user ? (
                       <FullList />
+                    ) : !browsed ? (
+                      <Navigate to="/welcome" />
+                    ) : (
+                      <Navigate to="/login" />
+                    )
+                  }
+                />
+                <Route
+                  path="/pomodoro"
+                  element={
+                    user ? (
+                      <Pomodoro />
                     ) : !browsed ? (
                       <Navigate to="/welcome" />
                     ) : (
