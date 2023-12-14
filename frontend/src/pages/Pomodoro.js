@@ -6,6 +6,7 @@ import SettingsContext from "../components/pomodoro/SettingsContext";
 
 const Pomodoro = () => {
     
+    // Estados para controlar la visibilidad de la configuración y los tiempos de trabajo/descanso
     const [showSettings, setShowSettings] = useState(false);
     const [workMinutes, setWorkMinutes] = useState(45);
     const [breakMinutes, setBreakMinutes] = useState(15);
