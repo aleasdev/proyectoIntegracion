@@ -58,28 +58,21 @@ const Navbar = () => {
                 
 
                 <div className={
-              "flex flex-col items-center sm:flex-row gap-4 " +
+              "mfnavbar flex flex-col items-center sm:flex-row gap-4 " +
               (navbarOpen ? " flex" : " hidden")
             }>
-                    <div className="flex gap-4 mt-[2px]">
-                        <a
-                            className=" hover:text-gray-700 cursor-pointer flex flex-col justify-center items-center  duration-500 after:opacity-0 hover:after:opacity-100  after:content-['']   after:h-[3px] after:bg-gray-700  after:transform after:duration-500 after:w-0 hover:after:w-full after:-mt-[2px] text-gray-700 "
-                            href="https://habitos-newsletter.netlify.app"
-                        >
-                            Newsletter
-                        </a>
-                    </div>
+                 
                     
                     <div className="flex gap-4 mt-[2px]">
                         {!user ? (
                             // Se muestra cuando el usuario no ha iniciado sesión
                             <>
-                                <div className="px-2 py-1 hover:bg-[#d7d9d8] duration-300 rounded-l-md">
+                                <div className="">
                                     <NavbarLink to="/login" >
                                         Iniciar sesión
                                     </NavbarLink>
                                 </div>
-                                <div className="px-2 py-1 hover:bg-[#d7d9d8] duration-300 rounded-r-md">
+                                <div className="">
                                     <NavbarLink to="/signup">
                                         Registrarse
                                     </NavbarLink>
@@ -88,11 +81,17 @@ const Navbar = () => {
                         ) : (
                             // Se muestra cuando el usuario ha iniciado sesión
                             
-                            <div className="flex gap-4 mt-[2px]">
+                            <div className=" flex gap-4 mt-[2px] ">
                               <NavbarLink to="/">Inicio</NavbarLink>
                               <NavbarLink to="/full-list">Todos los Hábitos</NavbarLink>
                               <NavbarLink to="/pomodoro">Pomodoro</NavbarLink>
                               <NavbarLink to="/survey">Encuesta de ansiedad</NavbarLink>
+                              <a
+                            className=" hover:text-gray-700 cursor-pointer flex flex-col justify-center items-center  duration-500 after:opacity-0 hover:after:opacity-100  after:content-['']   after:h-[3px] after:bg-gray-700  after:transform after:duration-500 after:w-0 hover:after:w-full after:-mt-[2px] text-gray-700 "
+                            href="https://habitos-newsletter.netlify.app"
+                        >
+                            Newsletter
+                        </a>
                            
                             <button className="hover:text-gray-700 cursor-pointer flex flex-col justify-center items-center  duration-500 after:opacity-0 hover:after:opacity-100  after:content-['']   after:h-[3px] after:bg-gray-700  after:transform after:duration-500 after:w-0 hover:after:w-full after:-mt-[2px] text-gray-700" onClick={handleLogout}>
                                 Cerrar sesión
