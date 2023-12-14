@@ -10,18 +10,17 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Welcome from "./pages/Welcome";
+import Pomodoro from "./pages/Pomodoro"
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 
 function App() {
   const { user } = useUserContext();
   const browsed = JSON.parse(localStorage.getItem("browsed"));
   console.log({ browsed });
 
-  
-  
   return (
     <>
       <BrowserRouter>
@@ -55,6 +54,18 @@ function App() {
                       <Navigate to="/login" />
                     )
                   }
+                />
+                <Route
+                  path="/pomodoro"
+                  element={
+                    user ? (
+                      <Pomodoro />
+                    ) : !browsed ? (
+                      <Navigate to="/welcome" />
+                    ) : (
+                      <Navigate to="/login" />
+                    )
+                  } 
                 />
                 <Route
                   path="/survey"
