@@ -54,6 +54,7 @@ const Navbar = () => {
                             Hábitos<span className=" pl-px "></span>
                         </h1>
                     </Link>
+
                 </div>
                 
 
@@ -93,9 +94,8 @@ const Navbar = () => {
                             <div className="flex gap-4 mt-[2px]">
                               <NavbarLink to="/">Inicio</NavbarLink>
                               <NavbarLink to="/full-list">Todos los Hábitos</NavbarLink>
-                              <NavbarLink to="/pomodoro">Pomodoro</NavbarLink>
                               <NavbarLink to="/survey">Encuesta de ansiedad</NavbarLink>
-                           
+
                             <button className="hover:text-gray-700 cursor-pointer flex flex-col justify-center items-center  duration-500 after:opacity-0 hover:after:opacity-100  after:content-['']   after:h-[3px] after:bg-gray-700  after:transform after:duration-500 after:w-0 hover:after:w-full after:-mt-[2px] text-gray-700" onClick={handleLogout}>
                                 Cerrar sesión
                             </button>
